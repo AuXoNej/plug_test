@@ -7,4 +7,4 @@
 
 Пример запроса: http://localhost:8080/ok?id=5
 Время ожидания: 5 сек
-Ответ: kooficent: 5
+Ответ: kooficent: 1
