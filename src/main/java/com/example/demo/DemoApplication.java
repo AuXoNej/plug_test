@@ -3,12 +3,37 @@ package com.example.demo;
 import net.minidev.json.JSONObject;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.concurrent.TimeUnit;
 
+class Client {
+    private int id;
+    private String name;
 
-import org.springframework.web.bind.annotation.RestController;
+
+    public Client(int id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int brand) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+}
+
 @SpringBootApplication
 @RestController
 
@@ -17,14 +42,15 @@ public class DemoApplication {
         SpringApplication.run(DemoApplication.class, args);
     }
 
-    @GetMapping("/ok")
-    public String ok(int id) throws InterruptedException {
-
-        JSONObject json = new JSONObject();
+    @PostMapping("/ok")
+    public JSONObject ok(@RequestBody Client client) throws InterruptedException {
+        JSONObject json_response = new JSONObject();
 
         int[] intArray = new int[]{1, 2, 3, 4, 5};
         boolean found = false;
-        int res = 5;
+
+        int kooficent = 5;
+        int id = client.getId();
 
         for(int x : intArray){
             if(x == id){
@@ -34,19 +60,20 @@ public class DemoApplication {
         }
 
         if (found){
-            res = 1;
+            kooficent = 1;
             TimeUnit.SECONDS.sleep(5);
         } else if (id < 10) {
-            res = 3;
+            kooficent = 3;
             TimeUnit.SECONDS.sleep(8);
         }
         else {
             TimeUnit.SECONDS.sleep(10);
         }
 
-        json.put("kooficent", res);
-        String response = json.toString();
-        return response;
+        json_response.put("id", id);
+        json_response.put("kooficent", kooficent);
+
+        return json_response;
     }
 }
-//http://localhost:8080/ok?id=5
+//http://localhost:8080/ok
